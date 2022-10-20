@@ -98,4 +98,80 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     setClock('.timer', deadline);
+
+
+
+    //Modal
+
+    const modalBtns = document.querySelectorAll('[data-modal]'),
+          modalCloseBtn = document.querySelector('[data-close]'),
+          modalWindow = document.querySelector('.modal');
+
+
+    // Создание модального окна с помощью инлайн стилей:
+    // modalBtns.forEach((btn) => {
+    //     btn.addEventListener('click', () => {
+    //         modalWindow.style.display = 'block';
+    //     });
+    // });
+    // modalCloseBtn.addEventListener('click', () => {
+    //     modalWindow.style.display = 'none';
+    // });
+
+
+    // Создание модального окна с помощью переключения классов:
+
+    // modalBtns.forEach((btn) => {
+    //     btn.addEventListener('click', () => {
+    //         // modalWindow.classList.add('show');
+    //         // modalWindow.classList.remove('hide');
+    //         modalWindow.classList.toggle('show');
+    //         document.body.style.overflow = 'hidden';
+    //     });
+    // });
+    // modalCloseBtn.addEventListener('click', () => {
+    //     // modalWindow.classList.add('hide');
+    //     // modalWindow.classList.remove('show');
+    //     modalWindow.classList.toggle('show');
+    //     document.body.style.overflow = '';
+    // });
+
+    // //Добавляем функционал закрытия модального окна при щелчке на подложку окна:
+    // modalWindow.addEventListener('click', (e) => {
+    //     if (e.target === modalWindow) {
+    //         modalWindow.classList.toggle('show');
+    //         document.body.style.overflow = '';
+    //     }
+    // });
+
+
+
+    // Создание модального окна с вынесением повторяющихся действий в функцию:
+
+    modalBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            modalWindow.classList.toggle('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModalWindow() {
+        modalWindow.classList.toggle('show');
+        document.body.style.overflow = '';
+    }
+    
+    modalCloseBtn.addEventListener('click', closeModalWindow);
+
+    modalWindow.addEventListener('click', (e) => {
+        if (e.target === modalWindow) {
+            closeModalWindow();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && modalWindow.classList.contains('show')) {
+            closeModalWindow();
+        }
+    });
+
 });
