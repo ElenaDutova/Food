@@ -222,10 +222,14 @@ window.addEventListener('DOMContentLoaded', () => {
   // });
   // Создание модального окна с вынесением повторяющихся действий в функцию:
 
+  function openModalWindow() {
+    modalWindow.classList.toggle('show');
+    document.body.style.overflow = 'hidden'; // clearTimeout(modalTimerId);
+  }
+
   modalBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      modalWindow.classList.toggle('show');
-      document.body.style.overflow = 'hidden';
+      openModalWindow();
     });
   });
 
@@ -244,7 +248,18 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.code === 'Escape' && modalWindow.classList.contains('show')) {
       closeModalWindow();
     }
-  });
+  }); //Устанавливаем таймер на модальное окно
+  // const modalTimerId = setTimeout(openModalWindow, 3000);
+  //Вызываем модальное окно, когда польз-ль полностью прокрутил страницу
+
+  function showModalByScroll() {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+      openModalWindow();
+      removeEventListener('scroll', showModalByScroll);
+    }
+  }
+
+  window.addEventListener('scroll', showModalByScroll);
 });
 
 /***/ })
